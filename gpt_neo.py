@@ -1,44 +1,25 @@
-'''
-python flan_t5.py --gpu_id 2 &
-python flan_t5.py --gpu_id 3 &
-python flan_t5.py --gpu_id 4 &
-python flan_t5.py --gpu_id 5 &
-python flan_t5.py --gpu_id 6 &
-python flan_t5.py --gpu_id 7 &
-python flan_t5.py --gpu_id 2 &
-python flan_t5.py --gpu_id 2 &
-'''
-
-import argparse
-
-parser = argparse.ArgumentParser()
-parser.add_argument('--gpu_id')
-
-args = parser.parse_args()
-
-print(f"using gpu {args.gpu_id}")
-
-
 import torch
 
 torch.cuda.get_device_name()
 
 torch.cuda.device_count()
 
-device = int(args.gpu_id)
+device = 2
+
+model_id = "EleutherAI/gpt-neo-1.3B"
 
 ###
 
 print("loading model")
 
-from transformers import AutoModelForSeq2SeqLM, AutoTokenizer
+from transformers import AutoModelForCausalLM, AutoTokenizer
 
-model = AutoModelForSeq2SeqLM.from_pretrained(
-    "google/flan-t5-base",
+model = AutoModelForCausalLM.from_pretrained(
+    model_id,
     )
 
 tokenizer = AutoTokenizer.from_pretrained(
-    "google/flan-t5-base",
+    model_id,
     )
 
 
@@ -55,7 +36,7 @@ question = "What is my name?"
 prompt = f"""
 {context}
 
-Q: {question}
+Question: {question}
 """
 
 inputs = tokenizer(
