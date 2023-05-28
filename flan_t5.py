@@ -1,12 +1,14 @@
 '''
-python flan_t5.py --gpu_id 0
+python flan_t5.py --gpu_id 7 &
 '''
 
 import argparse
 
+parser = argparse.ArgumentParser()
 parser.add_argument('gpu_id')
 
 args = parser.parse_args()
+
 print(f"gpu {args.gpu_id}")
 
 
