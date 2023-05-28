@@ -1,10 +1,22 @@
+'''
+python flan_t5.py --gpu_id 0
+'''
+
+import argparse
+
+parser.add_argument('gpu_id')
+
+args = parser.parse_args()
+print(f"gpu {args.gpu_id}")
+
+
 import torch
 
 torch.cuda.get_device_name()
 
 torch.cuda.device_count()
 
-device = 0
+device = int(args.gpu_id)
 
 ###
 
